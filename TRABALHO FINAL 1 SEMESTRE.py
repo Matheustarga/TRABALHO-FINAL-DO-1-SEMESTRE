@@ -18,6 +18,8 @@ lista_veiculos = {
     "CHEVROLET":["ONIX","TRACKER","MONTANA"]
 }
 
+lista_locação = ["FIT","ONIX","ARGO","MOBI"]
+
 #-----------------------------------------------
 #Cadastro do cliente.
 #O cliente deve informar seu nome, telefone e saldo disponível no início do sistema.
@@ -55,6 +57,8 @@ while True:
                 if confirmar_venda == 1:
                     saldo += valor_com_desconto
                     print(f"Saldo Atual R$ - {saldo}")
+                    #adicionar um item a lsita!!!!
+                    lista_fipe.append([marca_venda][modelo_venda])
                 elif confirmar_venda == 2:
                     print("VENDA CANCELADA!!!")
                 else:
@@ -67,8 +71,9 @@ while True:
 
 
     #Secção para aluguel
-
-
+    if menu == 3:
+        print(f"CARROS DISPONÍVEIS PARA LOCAÇÃO:\n {lista_locação}")
+        alugar = input("")
 
 
     #Secção para Comprar

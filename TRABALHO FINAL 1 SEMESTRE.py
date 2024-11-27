@@ -7,6 +7,7 @@
 #Tabela fipe
 Cliente={}
 Carros = {}
+
 lista_fipe = {
     "HONDA":{"CIVIC":100000,"FIT":90000,"HR-V":150000},
     "FIAT":{"MOBI":60000,"ARGO": 75000,"TORO":135000},
@@ -41,7 +42,7 @@ while True:
     menu = int(input())
     #Secção para vendas
     if menu == 1:
-        print(f"-----AUTOMÓVEIS QUE BUSCAMOS COMPRA-----\n{lista_veiculos}")
+        print(f"-----AUTOMÓVEIS QUE BUSCAMOS COMPRA-----\n{lista_veiculos.keys()}")
         marca_venda = str(input("Informe a marca do carro que deseja vender: ")).upper()
         if marca_venda in lista_fipe:
             print(f"{lista_veiculos[marca_venda]}")
@@ -58,7 +59,8 @@ while True:
                     saldo += valor_com_desconto
                     print(f"Saldo Atual R$ - {saldo}")
                     #adicionar um item a lsita!!!!
-                    lista_fipe.append([marca_venda][modelo_venda])
+                    
+                    
                 elif confirmar_venda == 2:
                     print("VENDA CANCELADA!!!")
                 else:
@@ -71,17 +73,29 @@ while True:
 
 
     #Secção para aluguel
-    if menu == 3:
+    if menu == 2:
         print(f"CARROS DISPONÍVEIS PARA LOCAÇÃO:\n {lista_locação}")
-        alugar = input("")
+        alugar = input("Digite o nome do carro que deseja alugar: \n").upper()
+        qtd_dias = int(input(f"Por quantos dias deseja alugar o carro modelo ({alugar})?"))
+        custo_aluguel = qtd_dias * 77
 
+        print(f"O custo total do aluguel é R$ - {custo_aluguel:.2f}")
+        confirmar_aluguel = int(input("Deseja confirma a locação do carro? (1-S/2-N)"))
+        if (alugar in lista_locação) and (confirmar_aluguel == 1) and (saldo >= custo_aluguel):
+            saldo -= custo_aluguel
+            lista_locação.remove(alugar)
+            print("Sucesso")
+        else:
+            print("Locação cancelada!!")
 
     #Secção para Comprar
 
 
     #Secção para exibir dados
     if menu == 4:
-        print(f"{Cliente[nome]}")
+        print(nome)
+        print(telefone)
+        print(saldo)
 
 
     #Secção para SAIR

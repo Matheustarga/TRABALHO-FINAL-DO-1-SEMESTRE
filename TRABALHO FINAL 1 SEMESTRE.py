@@ -7,7 +7,11 @@
 #Tabela fipe
 Cliente={}
 Carros = {}
-
+quantidade_carros={
+    "CIVIC":1,"FIT":1,"HR-V":1,
+    "MOBI":1,"ARGO":1,"TORO":1,
+    "ONIX":1,"TRACKER":1,"MONTANA":1
+}
 lista_fipe = {
     "HONDA":{"CIVIC":100000,"FIT":90000,"HR-V":150000},
     "FIAT":{"MOBI":60000,"ARGO": 75000,"TORO":135000},
@@ -59,7 +63,9 @@ while True:
                     saldo += valor_com_desconto
                     print(f"Saldo Atual R$ - {saldo}")
                     #adicionar um item a lsita!!!!
-                    
+                    att_valor_qtd = quantidade_carros[modelo_venda]
+                    quantidade_carros[modelo_venda] = att_valor_qtd + 1
+                    print(f"Quantidade atual do modelo {modelo_venda} em estoque apos a venda {quantidade_carros[modelo_venda]} unidades")
                     
                 elif confirmar_venda == 2:
                     print("VENDA CANCELADA!!!")
@@ -85,6 +91,10 @@ while True:
             saldo -= custo_aluguel
             lista_locação.remove(alugar)
             print("Sucesso")
+        elif (alugar not in lista_locação):
+            print("Carro indisponível para alugar!!")
+        elif (saldo < custo_aluguel):
+            print("Saldo insulficiente")
         else:
             print("Locação cancelada!!")
 

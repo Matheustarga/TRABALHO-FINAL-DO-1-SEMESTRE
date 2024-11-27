@@ -82,30 +82,62 @@ while True:
     if menu == 2:
         print(f"CARROS DISPONÍVEIS PARA LOCAÇÃO:\n {lista_locação}")
         alugar = input("Digite o nome do carro que deseja alugar: \n").upper()
-        qtd_dias = int(input(f"Por quantos dias deseja alugar o carro modelo ({alugar})?"))
-        custo_aluguel = qtd_dias * 77
+        if alugar in lista_locação:
+            qtd_dias = int(input(f"Por quantos dias deseja alugar o carro modelo ({alugar})?"))
+            custo_aluguel = qtd_dias * 77
 
-        print(f"O custo total do aluguel é R$ - {custo_aluguel:.2f}")
-        confirmar_aluguel = int(input("Deseja confirma a locação do carro? (1-S/2-N)"))
-        if (alugar in lista_locação) and (confirmar_aluguel == 1) and (saldo >= custo_aluguel):
-            saldo -= custo_aluguel
-            lista_locação.remove(alugar)
-            print("Sucesso")
-        elif (alugar not in lista_locação):
-            print("Carro indisponível para alugar!!")
-        elif (saldo < custo_aluguel):
-            print("Saldo insulficiente")
+            print(f"O custo total do aluguel é R$ - {custo_aluguel:.2f}")
+            confirmar_aluguel = int(input("Deseja confirma a locação do carro? (1-S/2-N)"))
+            if (alugar in lista_locação) and (confirmar_aluguel == 1) and (saldo >= custo_aluguel):
+                saldo -= custo_aluguel
+                lista_locação.remove(alugar)
+                print("Sucesso")
+            elif (alugar not in lista_locação):
+                print("Carro indisponível para alugar!!")
+            elif (saldo < custo_aluguel):
+                print("Saldo insulficiente")
+            else:
+                print("Locação cancelada!!")
         else:
-            print("Locação cancelada!!")
-
+            print(f"O carro do modelo {alugar} não está disponível!")
     #Secção para Comprar
+    if menu == 3:
+        print(f"-----AUTOMÓVEIS QUE BUSCAMOS COMPRA-----\n{lista_veiculos.keys()}")
+        marca_compra = str(input("Informe a marca do carro que deseja vender: ")).upper()
+        if marca_compra in lista_fipe:
+            print(f"{lista_veiculos[marca_compra]}")
+            modelo_compra = (input("Informe o modelo que deseja vender: ")).upper()
+                
+            if modelo_compra in lista_fipe[marca_compra] and quantidade_carros[modelo_compra] >= 1:
+                    
+                valor_fipe = lista_fipe[marca_compra][modelo_compra]
+                valor_com_aumento = valor_fipe + (valor_fipe * 0.25)
+                print(f"Valor total de compra R${valor_com_aumento}")########
+                confirmar_compra = float(input("Deseja realmente comprar o carro?\n1 - SIM\n2 - NÃO\n"))
 
+                if confirmar_compra == 1:
+                    saldo -= valor_com_aumento
+                    print(f"Saldo Atual R$ - {saldo}")
+                    #remover um item da lista!!!!
+                    att_valor_qtd = quantidade_carros[modelo_compra]
+                    quantidade_carros[modelo_compra] = att_valor_qtd - 1
+                    print(f"Quantidade atual do modelo {modelo_compra} em estoque apos a venda {quantidade_carros[modelo_compra]} unidades")
+                    print("PARABÉNS PELA AQUISIÇÃO!!!!")
+                    
+                elif confirmar_compra == 2:
+                    print("VENDA CANCELADA!!!")
+                else:
+                    print("VALOR INADEQUADO")
+            else:
+              print(f"{modelo_compra} não está disponível!")               
+        else:
+            print(f"{marca_compra} não está disponível!") 
 
     #Secção para exibir dados
     if menu == 4:
-        print(nome)
-        print(telefone)
-        print(saldo)
+        print(f"NOME DO CLIENTE: {nome}")
+        print(f"TELEFONE PARA CONTATO: {telefone}")
+        print(f"SALDO ATUAL DO CLIENTE: {saldo}")
 
 
     #Secção para SAIR

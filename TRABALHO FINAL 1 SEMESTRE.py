@@ -6,6 +6,8 @@
 #secção das tuplas e listas.
 #Tabela fipe
 
+# Listas contendo respectivamente a quantidade de carros em estoque. A lista com os valores de cada carro com divisões por marca. listas com os nomes dos veiculos
+#para fins visuais, a lista de locação é utilizada para verificar a disponibilidade do modelo.
 quantidade_carros={
    "CIVIC":1,"FIT":1,"HR-V":1,
     "MOBI":1,"ARGO":1,"TORO":1,
@@ -47,11 +49,17 @@ saldo = float(input("Informe o saldo: "))
 #----------------------------------------------
 #Start do sitema.
 #O sistema deve funcionar com base em um menu interativo que permite ao cliente escolher entre venda, aluguel ou compra de veículos.
+#O menu interarivo baseia-se em um LOOP principal que é quebrado quando o user solicita.
 while True:
+    #Mensagem padra do menu para selecionar a funcionalidade/secção desejada.
     print("------SISTEMA DE COMPRA, VENDA E ALUGUEL DE VEÍCULOS------")
     print("1. Venda\n2. Aluguel\n3. Comprar\n4. Exibir saldo e dados do cliente\n5. SAIR")
     menu = int(input())
     #Secção para vendas
+    #no primeiro momento dessa secção é apresentada ao usuário as marcas de carros que a empresa trabalha, logo após o usuário deve digitar a marca para que seja realizada a verificação se a marca desejada está presente no portifólio da empresa
+    #após isto, são apresentados os modelos da marca escolhida pelo usuário e novamente ele deve digitar o modelos desejado
+    #com isso será aplicada da regra de negócio e será exibido o valor da venda e exibido o valor, depois será solicitado uma confirmação de venda para o usuário
+    # caso seja confirmada a venda, será acrescentado o valor no saldo do cliente, se adicionar o carro a lista de estoque.
     if menu == 1:
         print(f"-----AUTOMÓVEIS QUE BUSCAMOS COMPRA-----\n{lista_veiculos.keys()}")
         marca_venda = str(input("Informe a marca do carro que deseja vender: ")).upper()
@@ -63,7 +71,7 @@ while True:
                     
                 valor_fipe = lista_fipe[marca_venda][modelo_venda]
                 valor_com_desconto = valor_fipe - (valor_fipe * 0.12)
-                print(f"Valor com desconto {valor_com_desconto}")
+                print(f"Valor Total: {valor_com_desconto}")
                 confirmar_venda = float(input("Deseja realmente vender o carro?\n1 - SIM\n2 - NÃO\n"))
 
                 if confirmar_venda == 1:
@@ -86,6 +94,10 @@ while True:
 
 
     #Secção para aluguel
+    #Nesta secção será apresentado ao usuário os carros com disponibilidade de locação, onde o mesmo deverá buscar 1º a marca do carro desejado e 2º o modelo do carro, caso os dois valores
+    #estiverem contidos nas listas o sistema pergunta a quantidade de dias que sera realizada a locação. Adiante será realizada a equação para calcular o valor do aluguel.
+    #Com isso será exibida uma mensagem contendo o valor do aluguel e será solicitada a confirmação do usuário.
+    #caso seja confirmado, o valor da locação sera debitado do saldo do usuário, o carro será retirado da lista de carros com disponibilidade para locaçao e será exibida uma mensagem de confirmação
     if menu == 2:
         print(f"CARROS DISPONÍVEIS PARA LOCAÇÃO:\n {lista_locação.keys()}")
         alugar_marca = input("Digite a marca do carro que deseja alugar: \n").upper()
@@ -102,7 +114,7 @@ while True:
                 if (alugar_marca in lista_locação) and (alugar_modelo in lista_locação[alugar_marca]) and (confirmar_aluguel == 1) and (saldo >= custo_aluguel):
                     saldo -= custo_aluguel
                     lista_locação[alugar_marca].remove(alugar_modelo)
-                    print("Sucesso")
+                    print("Locação realizada com Sucesso!!!")
                 elif (alugar_modelo not in lista_locação[alugar_marca]):
                     print("Carro indisponível para alugar!!")
                 elif (saldo < custo_aluguel):
@@ -114,6 +126,8 @@ while True:
         else:
             print(f"A marca {alugar_marca} não está disponível!")
     #Secção para Comprar
+    #utiliza os mesmos parametros de filtro e busca que as secções anteriores, a diferença aqui fica na regra de negócio, pois aqui é retirado do estoque da empresa o carro comprado
+    #o valor da compra é debitado do saldo do cliente, e por fim é exibida a mensagem de confirmação de compra.
     if menu == 3:
         print(f"-----AUTOMÓVEIS QUE BUSCAMOS COMPRA-----\n{lista_veiculos.keys()}")
         marca_compra = str(input("Informe a marca do carro que deseja comprar: ")).upper()
@@ -147,6 +161,7 @@ while True:
             print(f"{marca_compra} não está disponível!") 
 
     #Secção para exibir dados
+    #Informa os dados do cliente digitados posteriormente, assim como o saldo sempre atualizado com base nas operações realizadas.
     if menu == 4:
         print(f"NOME DO CLIENTE: {nome}")
         print(f"TELEFONE PARA CONTATO: {telefone}")
@@ -155,4 +170,6 @@ while True:
 
     #Secção para SAIR
     if menu == 5:
+        print("FINALIZANDO O SISTEMA......")
         break
+        
